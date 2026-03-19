@@ -1,0 +1,239 @@
+[ +155 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[        ] executing: [C:\flutter/] git -c log.showSignature=false log HEAD -n 1 --pretty=format:%ad --date=iso
+[  +81 ms] Exit code 0 from: git -c log.showSignature=false log HEAD -n 1 --pretty=format:%ad --date=iso
+[        ] 2026-02-18 13:54:59 -0800
+[  +10 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[   +1 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[  +27 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[   +1 ms] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[   +1 ms] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[   +7 ms] Skipping pub get: version match.
+[  +76 ms] Found plugin shared_preferences at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences-2.5.4\
+[   +4 ms] Found plugin shared_preferences_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_windows-2.4.1\
+[   +7 ms] Found plugin path_provider_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +9 ms] Found plugin shared_preferences_web at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_web-2.4.3\
+[   +5 ms] Found plugin shared_preferences_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_linux-2.4.1\
+[   +2 ms] Found plugin path_provider_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +3 ms] Found plugin shared_preferences_foundation at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_foundation-2.5.6\
+[   +3 ms] Found plugin shared_preferences_android at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.21\
+[  +12 ms] Found plugin flutter_secure_storage at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-9.2.4\
+[   +2 ms] Found plugin flutter_secure_storage_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_windows-3.1.2\
+[   +6 ms] Found plugin path_provider at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +3 ms] Found plugin path_provider_foundation at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.6.0\
+[  +18 ms] Found plugin path_provider_android at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\
+[   +2 ms] Found plugin flutter_secure_storage_web at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_web-1.2.1\
+[   +2 ms] Found plugin flutter_secure_storage_macos at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_macos-3.1.3\
+[   +1 ms] Found plugin flutter_secure_storage_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_linux-1.2.3\
+[  +45 ms] Found plugin shared_preferences at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences-2.5.4\
+[   +1 ms] Found plugin shared_preferences_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_windows-2.4.1\
+[   +3 ms] Found plugin path_provider_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +6 ms] Found plugin shared_preferences_web at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_web-2.4.3\
+[   +3 ms] Found plugin shared_preferences_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_linux-2.4.1\
+[   +2 ms] Found plugin path_provider_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +2 ms] Found plugin shared_preferences_foundation at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_foundation-2.5.6\
+[   +1 ms] Found plugin shared_preferences_android at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.21\
+[   +7 ms] Found plugin flutter_secure_storage at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-9.2.4\
+[   +1 ms] Found plugin flutter_secure_storage_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_windows-3.1.2\
+[   +2 ms] Found plugin path_provider at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +1 ms] Found plugin path_provider_foundation at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.6.0\
+[  +11 ms] Found plugin path_provider_android at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\
+[   +2 ms] Found plugin flutter_secure_storage_web at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_web-1.2.1\
+[   +2 ms] Found plugin flutter_secure_storage_macos at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_macos-3.1.3\
+[   +1 ms] Found plugin flutter_secure_storage_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_linux-1.2.3\
+[  +11 ms] Skipping generating web_plugin_registrant.dart because it is up-to-date.
+[  +34 ms] Found plugin shared_preferences at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences-2.5.4\
+[   +1 ms] Found plugin shared_preferences_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_windows-2.4.1\
+[   +3 ms] Found plugin path_provider_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +5 ms] Found plugin shared_preferences_web at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_web-2.4.3\
+[   +2 ms] Found plugin shared_preferences_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_linux-2.4.1\
+[   +1 ms] Found plugin path_provider_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +1 ms] Found plugin shared_preferences_foundation at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_foundation-2.5.6\
+[   +1 ms] Found plugin shared_preferences_android at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.21\
+[   +6 ms] Found plugin flutter_secure_storage at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-9.2.4\
+[   +1 ms] Found plugin flutter_secure_storage_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_windows-3.1.2\
+[   +2 ms] Found plugin path_provider at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +1 ms] Found plugin path_provider_foundation at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.6.0\
+[  +12 ms] Found plugin path_provider_android at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\
+[   +2 ms] Found plugin flutter_secure_storage_web at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_web-1.2.1\
+[   +1 ms] Found plugin flutter_secure_storage_macos at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_macos-3.1.3\
+[   +1 ms] Found plugin flutter_secure_storage_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_linux-1.2.3\
+[   +8 ms] Generating C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\android\app\src\main\java\io\flutter\plugins\GeneratedPluginRegistrant.java
+[   +2 ms] Skipping generating GeneratedPluginRegistrant.java because it is up-to-date.
+[   +4 ms] Skipping generating generated_plugin_registrant.h because it is up-to-date.
+[   +1 ms] Skipping generating generated_plugin_registrant.cc because it is up-to-date.
+[   +2 ms] Skipping generating generated_plugins.cmake because it is up-to-date.
+[  +55 ms] Found plugin shared_preferences at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences-2.5.4\
+[   +1 ms] Found plugin shared_preferences_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_windows-2.4.1\
+[   +5 ms] Found plugin path_provider_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[  +26 ms] Found plugin shared_preferences_web at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_web-2.4.3\
+[   +2 ms] Found plugin shared_preferences_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_linux-2.4.1\
+[   +1 ms] Found plugin path_provider_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +2 ms] Found plugin shared_preferences_foundation at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_foundation-2.5.6\
+[   +1 ms] Found plugin shared_preferences_android at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.21\
+[   +5 ms] Found plugin flutter_secure_storage at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-9.2.4\
+[   +1 ms] Found plugin flutter_secure_storage_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_windows-3.1.2\
+[   +1 ms] Found plugin path_provider at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +1 ms] Found plugin path_provider_foundation at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.6.0\
+[   +8 ms] Found plugin path_provider_android at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\
+[   +1 ms] Found plugin flutter_secure_storage_web at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_web-1.2.1\
+[   +1 ms] Found plugin flutter_secure_storage_macos at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_macos-3.1.3\
+[   +1 ms] Found plugin flutter_secure_storage_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_linux-1.2.3\
+[   +4 ms] generated_plugin_registrant.dart not found. Skipping.
+[   +1 ms] Compiling lib\main.dart for the Web...
+[   +3 ms] Initializing file store
+[  +36 ms] invalidated build due to missing files: C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\web\*\index.html, C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\web\flutter_bootstrap.js
+[   +1 ms] web_entrypoint: Starting due to {InvalidatedReasonKind.outputSetAddition: The following outputs were added to the output set: C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\main.dart, InvalidatedReasonKind.inputChanged: The following inputs have updated contents: C:\flutter\packages\flutter_tools\lib\src\build_system\targets\web.dart}
+[   +1 ms] Skipping target: gen_localizations
+[   +1 ms] web_templated_files: Starting due to {InvalidatedReasonKind.buildKeyChanged: The target build key changed., InvalidatedReasonKind.outputSetAddition: The following outputs were added to the output set: C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\build\web\*\index.html,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\build\web\flutter_bootstrap.js, InvalidatedReasonKind.inputMissing: The following inputs were missing: C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\web\*\index.html,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\web\flutter_bootstrap.js, InvalidatedReasonKind.inputChanged: The following inputs have updated contents: C:\flutter\bin\cache\engine.stamp}
+[   +1 ms] dart_build: Starting due to {}
+[   +1 ms] web_static_assets: Starting due to {InvalidatedReasonKind.inputChanged: The following inputs have updated contents: C:\flutter\bin\cache\engine.stamp, InvalidatedReasonKind.outputSetAddition: The following outputs were added to the output set: C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\flutter.js,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\canvaskit.js,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\canvaskit.js.symbols,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\canvaskit.wasm,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\chromium\canvaskit.js,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\chromium\canvaskit.js.symbols,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\chromium\canvaskit.wasm,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\skwasm.js,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\skwasm.js.symbols,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\skwasm.wasm,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\skwasm_heavy.js,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\skwasm_heavy.js.symbols,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\skwasm_heavy.wasm,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\wimp.js,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\wimp.js.symbols,C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\canvaskit\wimp.wasm}
+[ +365 ms] web_static_assets: Complete
+[  +44 ms] web_templated_files: Complete
+[  +30 ms] Building native assets for web.
+[  +27 ms] Running `C:\flutter\bin\cache\dart-sdk\bin\dart compile kernel --packages=C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\package_config.json --output=C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\hooks_runner\objective_c\6782ff62a0\hook.dill --depfile=C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\hooks_runner\objective_c\6782ff62a0\hook.dill.d C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\objective_c-9.3.0\hook\build.dart`.
+[  +11 ms] Found plugin shared_preferences at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences-2.5.4\
+[   +1 ms] Found plugin shared_preferences_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_windows-2.4.1\
+[   +2 ms] Found plugin path_provider_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +3 ms] Found plugin shared_preferences_web at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_web-2.4.3\
+[   +5 ms] Found plugin shared_preferences_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_linux-2.4.1\
+[   +2 ms] Found plugin path_provider_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +3 ms] Found plugin shared_preferences_foundation at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_foundation-2.5.6\
+[   +2 ms] Found plugin shared_preferences_android at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.21\
+[   +6 ms] Found plugin flutter_secure_storage at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage-9.2.4\
+[   +1 ms] Found plugin flutter_secure_storage_windows at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_windows-3.1.2\
+[   +1 ms] Found plugin path_provider at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +1 ms] Found plugin path_provider_foundation at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.6.0\
+[   +7 ms] Found plugin path_provider_android at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\
+[   +1 ms] Found plugin flutter_secure_storage_web at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_web-1.2.1\
+[   +2 ms] Found plugin flutter_secure_storage_macos at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_macos-3.1.3\
+[        ] Found plugin flutter_secure_storage_linux at C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_secure_storage_linux-1.2.3\
+[   +6 ms] web_entrypoint: Complete
+[   +2 ms] dart2js: Starting due to {}
+[   +5 ms] executing: C:\flutter\bin\cache\dart-sdk\bin\dart.exe compile js --platform-binaries=C:\flutter\bin\cache\flutter_web_sdk\kernel --invoker=flutter_tool -Ddart.vm.product=true -DFLUTTER_VERSION=3.41.2 -DFLUTTER_CHANNEL=stable -DFLUTTER_GIT_URL=https://github.com/flutter/flutter.git -DFLUTTER_FRAMEWORK_REVISION=90673a4eef -DFLUTTER_ENGINE_REVISION=6c0baaebf7 -DFLUTTER_DART_VERSION=3.11.0 -DFLUTTER_WEB_USE_SKIA=true -DFLUTTER_WEB_USE_SKWASM=false -DFLUTTER_WEB_CANVASKIT_URL=https://www.gstatic.com/flutter-canvaskit/6c0baaebf70e0148f485f27d5616b3d3382da7bf/ --native-null-assertions --no-source-maps -O4 --minify -o C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\app.dill --packages=C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\package_config.json --cfe-only C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\main.dart
+[        ] dart2wasm: Starting due to {}
+[   +1 ms] executing: C:\flutter\bin\cache\dart-sdk\bin\dart.exe compile wasm --packages=C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\package_config.json --extra-compiler-option=--platform=C:\flutter\bin\cache\flutter_web_sdk\kernel\dart2wasm_platform.dill -Ddart.vm.profile=false -Ddart.vm.product=true --extra-compiler-option=--delete-tostring-package-uri=dart:ui --extra-compiler-option=--delete-tostring-package-uri=package:flutter --extra-compiler-option=--import-shared-memory --extra-compiler-option=--shared-memory-max-pages=32768 -DFLUTTER_VERSION=3.41.2 -DFLUTTER_CHANNEL=stable -DFLUTTER_GIT_URL=https://github.com/flutter/flutter.git -DFLUTTER_FRAMEWORK_REVISION=90673a4eef -DFLUTTER_ENGINE_REVISION=6c0baaebf7 -DFLUTTER_DART_VERSION=3.11.0 -DFLUTTER_WEB_USE_SKIA=false -DFLUTTER_WEB_USE_SKWASM=true -DFLUTTER_WEB_CANVASKIT_URL=https://www.gstatic.com/flutter-canvaskit/6c0baaebf70e0148f485f27d5616b3d3382da7bf/ --extra-compiler-option=--depfile=C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\dart2wasm.d -O2 --strip-wasm --no-source-maps --minify --extra-compiler-option=--dry-run -o C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\main.dart.wasm C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\main.dart
+[+1282 ms] input.json contents:
+           {
+             "assets": {},
+             "config": {
+               "build_asset_types": [],
+               "linking_enabled": true
+             },
+             "out_dir_shared": "C:\\Users\\varsh\\.gemini\\antigravity\\scratch\\quantum-focus\\flutter_app\\.dart_tool\\hooks_runner\\shared\\objective_c\\build\\",
+             "out_file": "C:\\Users\\varsh\\.gemini\\antigravity\\scratch\\quantum-focus\\flutter_app\\.dart_tool\\hooks_runner\\objective_c\\6782ff62a0\\output.json",
+             "package_name": "objective_c",
+             "package_root": "C:\\Users\\varsh\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\objective_c-9.3.0\\",
+             "user_defines": {}
+           }
+[   +5 ms] Running `(cd C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\objective_c-9.3.0\; PATH=C:\Program Files\WindowsApps\Microsoft.PowerShell_7.5.5.0_x64__8wekyb3d8bbwe;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\varsh\AppData\Local\Programs\Python\Python313\Scripts\;C:\Users\varsh\AppData\Local\Programs\Python\Python313\;C:\Users\varsh\AppData\Local\Microsoft\WindowsApps;C:\Users\varsh\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk-24\bin;C:\Users\varsh\AppData\Roaming\npm;C:\Users\varsh\AppData\Local\Programs\Antigravity\bin;C:\flutter\bin PROGRAMDATA=C:\ProgramData SYSTEMDRIVE=C: SYSTEMROOT=C:\WINDOWS TEMP=C:\Users\varsh\AppData\Local\Temp TMP=C:\Users\varsh\AppData\Local\Temp USERPROFILE=C:\Users\varsh WINDIR=C:\WINDOWS C:\flutter\bin\cache\dart-sdk\bin\dart --packages=C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\package_config.json C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\hooks_runner\objective_c\6782ff62a0\hook.dill --config=C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\hooks_runner\objective_c\6782ff62a0\input.json )`.
+[ +249 ms] output.json contents:
+           {
+             "assets_for_linking": {},
+             "status": "success",
+             "timestamp": "2026-03-17 17:55:08.000"
+           }
+[  +36 ms] Building native assets for web done.
+[   +5 ms] dart_build: Complete
+[+8923 ms] Compiled 44,575,267 input bytes (36,554,117 characters source) to 31,638,688 kernel bytes in 10.0 seconds
+           Dart file .dart_tool/flutter_build/db83c69a46b69b4ae982987f2bffb298/main.dart compiled to dill: .dart_tool/flutter_build/db83c69a46b69b4ae982987f2bffb298/app.dill.
+[        ] executing: C:\flutter\bin\cache\dart-sdk\bin\dart.exe compile js --platform-binaries=C:\flutter\bin\cache\flutter_web_sdk\kernel --invoker=flutter_tool -Ddart.vm.product=true -DFLUTTER_VERSION=3.41.2 -DFLUTTER_CHANNEL=stable -DFLUTTER_GIT_URL=https://github.com/flutter/flutter.git -DFLUTTER_FRAMEWORK_REVISION=90673a4eef -DFLUTTER_ENGINE_REVISION=6c0baaebf7 -DFLUTTER_DART_VERSION=3.11.0 -DFLUTTER_WEB_USE_SKIA=true -DFLUTTER_WEB_USE_SKWASM=false -DFLUTTER_WEB_CANVASKIT_URL=https://www.gstatic.com/flutter-canvaskit/6c0baaebf70e0148f485f27d5616b3d3382da7bf/ --native-null-assertions --no-source-maps -O4 --minify -o C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\main.dart.js C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\app.dill
+[+34591 ms] /C:/flutter/packages/flutter/lib/src/widgets/widget_state.dart:1054:9:
+            Hint: This 'noSuchMethod' implementation is guaranteed to throw an exception. The generated code will be smaller if it is rewritten.
+            Rewrite to 'noSuchMethod(Invocation i) => super.noSuchMethod(i);'.
+              Never noSuchMethod(Invocation invocation) {
+                    ^
+            Compiled 48,826,968 input bytes (9,202,182 characters source) to 2,918,301 characters JavaScript in 34.0 seconds
+[  +45 ms] dart2js: Complete
+[+12648 ms] Found incompatibilities with WebAssembly.
+
+            package:flutter_secure_storage_web/flutter_secure_storage_web.dart 5:1 - dart:html unsupported (0)
+            package:flutter_secure_storage_web/flutter_secure_storage_web.dart 6:1 - dart:js_util unsupported (15)
+            package:flutter_secure_storage_web/src/subtle.dart 21:1 - dart:html unsupported (0)
+            package:flutter_secure_storage_web/src/subtle.dart 22:1 - dart:js_util unsupported (15)
+            package:flutter_secure_storage_web/src/subtle.dart 26:1 - package:js/js.dart unsupported (14)
+[   +2 ms] Wasm dry run findings:
+[   +1 ms] Found incompatibilities with WebAssembly.
+
+           package:flutter_secure_storage_web/flutter_secure_storage_web.dart 5:1 - dart:html unsupported (0)
+           package:flutter_secure_storage_web/flutter_secure_storage_web.dart 6:1 - dart:js_util unsupported (15)
+           package:flutter_secure_storage_web/src/subtle.dart 21:1 - dart:html unsupported (0)
+           package:flutter_secure_storage_web/src/subtle.dart 22:1 - dart:js_util unsupported (15)
+           package:flutter_secure_storage_web/src/subtle.dart 26:1 - package:js/js.dart unsupported (14)
+
+[        ] Consider addressing these issues to enable wasm builds. See docs for more info: https://docs.flutter.dev/platform-integration/web/wasm
+
+[  +12 ms] Use --no-wasm-dry-run to disable these warnings.
+[  +13 ms] dart2wasm: Complete
+[   +7 ms] web_release_bundle: Starting due to {}
+[ +230 ms] shaderc command: [C:\flutter\bin\cache\artifacts\engine\windows-x64\impellerc.exe, --sksl, --iplr, --json, --sl=C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\build\web\assets\shaders/ink_sparkle.frag, --spirv=C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\build\web\assets\shaders/ink_sparkle.frag.spirv, --input=C:\flutter\packages\flutter\lib\src\material\shaders\ink_sparkle.frag, --input-type=frag, --include=C:\flutter\packages\flutter\lib\src\material\shaders, --include=C:\flutter\bin\cache\artifacts\engine\windows-x64\shader_lib]
+[   +4 ms] shaderc command: [C:\flutter\bin\cache\artifacts\engine\windows-x64\impellerc.exe, --sksl, --iplr, --json, --sl=C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\build\web\assets\shaders/stretch_effect.frag, --spirv=C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\build\web\assets\shaders/stretch_effect.frag.spirv, --input=C:\flutter\packages\flutter\lib\src\material\shaders\stretch_effect.frag, --input-type=frag, --include=C:\flutter\packages\flutter\lib\src\material\shaders, --include=C:\flutter\bin\cache\artifacts\engine\windows-x64\shader_lib]
+[ +242 ms] Running command: C:\flutter\bin\cache\dart-sdk\bin\dart.exe C:\flutter\bin\cache\artifacts\engine\windows-x64\const_finder.dart.snapshot --kernel-file C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\.dart_tool\flutter_build\db83c69a46b69b4ae982987f2bffb298\app.dill --class-library-uri package:flutter/src/widgets/icon_data.dart --class-name IconData --annotation-class-name _StaticIconProvider --annotation-class-library-uri package:flutter/src/widgets/icon_data.dart
+[+1358 ms] Expected to find fontFamily for constant IconData with codepoint: 128842.0, but found fontFamily: null. This usually means you are relying on the system font. Alternatively, font families in an IconData class can be provided in the assets section of your pubspec.yaml, or you are missing "uses-material-design: true".
+[        ] Expected to find fontFamily for constant IconData with codepoint: 9658.0, but found fontFamily: null. This usually means you are relying on the system font. Alternatively, font families in an IconData class can be provided in the assets section of your pubspec.yaml, or you are missing "uses-material-design: true".
+[   +3 ms] Running font-subset: C:\flutter\bin\cache\artifacts\engine\windows-x64\font-subset.exe C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\build\web\assets\packages/cupertino_icons/assets/CupertinoIcons.ttf C:\Users\varsh\AppData\Local\Pub\Cache\hosted\pub.dev\cupertino_icons-1.0.8\assets\CupertinoIcons.ttf, using codepoints 62468 62730 62717 62419 62415 62629 62318 optional:32
+[        ] Running font-subset: C:\flutter\bin\cache\artifacts\engine\windows-x64\font-subset.exe C:\Users\varsh\.gemini\antigravity\scratch\quantum-focus\flutter_app\build\web\assets\fonts/MaterialIcons-Regular.otf C:\flutter\bin\cache\artifacts\material_fonts\MaterialIcons-Regular.otf, using codepoints 983236 61464 58289 62624 62625 62329 983146 58519 57491 61199 62268 61890 61103 57689 58041 58902 58710 58735 62410 62538 62004 58531 984413 57499 57415 57706 63670 58258 983273 983126 983200 983442 57690 62834 63227 983148 61112 984603 57912 58644 63668 983334 62775 63035 63034 63126 983613 62974 983075 63030 57582 58978 983712 57490 62832 58332 57502 57501 57496 57694 57695 57657 57882 57504 61453 57634 57498 57926 57704 61061 61060 62833 59283 59282 57500 61069 61068 62842 62841 59291 59290 58011 58012 61575 61576 63348 63349 59797 59798 58372 58370 61930 61927 63708 63705 60157 60154 58771 58189 62328 61752 983402 63526 60555 59975 58814 58813 57846 57862 58727 57686 61764 57402 984351 63259 63471 63512 61137 62318 63627 optional:32
+[ +184 ms] Font asset "CupertinoIcons.ttf" was tree-shaken, reducing it from 257628 to 1472 bytes (99.4% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+[   +3 ms] Font asset "MaterialIcons-Regular.otf" was tree-shaken, reducing it from 1645184 to 16140 bytes (99.0% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+[  +36 ms] web_release_bundle: Complete
+[+6101 ms] web_service_worker: Starting due to {}
+[  +54 ms] web_service_worker: Complete
+[+1558 ms] Persisting file store
+[  +10 ms] Done persisting file store
+[  +22 ms] Compiling lib\main.dart for the Web... (completed in 68.2s)
+[        ] ΓêÜ Built build\web
+[  +39 ms] "flutter web" took 68,807ms.
+[ +132 ms] Running 1 shutdown hook
+[   +5 ms] Shutdown hooks complete
+[ +151 ms] exiting with code 0
