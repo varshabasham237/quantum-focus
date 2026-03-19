@@ -4,7 +4,7 @@ FastAPI dependencies — authentication middleware.
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from utils.security import decode_token
+from utils.security import decode_token, is_token_blacklisted
 from database import get_db
 
 security_scheme = HTTPBearer()
@@ -18,6 +18,15 @@ async def get_current_user(
     Authorization header. Returns the user document from MongoDB.
     """
     token = credentials.credentials
+
+    # Reject blacklisted (logged-out) tokens
+    if is_token_blacklisted(token):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token has been revoked",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
     payload = decode_token(token)
 
     if not payload or payload.get("type") != "access":

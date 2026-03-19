@@ -23,8 +23,14 @@ class PlanBlock(BaseModel):
     """A single time block in the plan."""
     type: BlockType
     subject: Optional[str] = None       # only for 'study' blocks
+    task: Optional[str] = None          # the specific to-do task (e.g., "Read Chapter 3")
     duration_min: int                    # duration in minutes
     editable: bool = False               # only study blocks are editable
+
+
+class DailySessionTaskUpdate(BaseModel):
+    block_index: int
+    task: str
 
 
 class DayPlan(BaseModel):
@@ -54,3 +60,16 @@ class PlanUpdateRequest(BaseModel):
     """Request to update editable fields in a specific plan."""
     mode: PlanMode
     updates: List[PlanBlockUpdate]
+
+
+class DailySessionRequest(BaseModel):
+    """Request to lock a study plan mode for today."""
+    mode: PlanMode
+
+
+class DailySessionResponse(BaseModel):
+    """Response containing the locked daily session."""
+    date: str
+    mode: PlanMode
+    blocks: List[PlanBlock]
+    locked: bool = True

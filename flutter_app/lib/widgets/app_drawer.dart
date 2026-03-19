@@ -176,10 +176,42 @@ class AppDrawer extends StatelessWidget {
             label: 'Logout',
             textColor: AppTheme.accentRose,
             onTap: () async {
-              final auth = context.read<AuthService>();
-              await auth.logout();
-              if (context.mounted) {
-                Navigator.pushReplacementNamed(context, '/');
+              final confirmed = await showDialog<bool>(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  backgroundColor: AppTheme.bgSecondary,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  title: const Text(
+                    'Logout',
+                    style: TextStyle(color: AppTheme.textPrimary, fontWeight: FontWeight.w700),
+                  ),
+                  content: const Text(
+                    'Are you sure you want to logout? Your session will be securely terminated.',
+                    style: TextStyle(color: AppTheme.textSecondary),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(false),
+                      child: const Text('Cancel', style: TextStyle(color: AppTheme.textMuted)),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(true),
+                      style: TextButton.styleFrom(
+                        backgroundColor: AppTheme.accentRose.withValues(alpha: 0.15),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                      child: const Text('Logout', style: TextStyle(color: AppTheme.accentRose, fontWeight: FontWeight.w600)),
+                    ),
+                  ],
+                ),
+              );
+
+              if (confirmed == true) {
+                final auth = context.read<AuthService>();
+                await auth.logout();
+                if (context.mounted) {
+                  Navigator.pushReplacementNamed(context, '/');
+                }
               }
             },
           ),

@@ -53,6 +53,7 @@ extension PlanModeLabel on PlanMode {
 class PlanBlock {
   final BlockType type;
   final String? subject;
+  final String? task;
   final int durationMin;
   final bool editable;
 
@@ -63,6 +64,7 @@ class PlanBlock {
   PlanBlock({
     required this.type,
     this.subject,
+    this.task,
     required this.durationMin,
     required this.editable,
     this.editedSubject,
@@ -86,6 +88,7 @@ class PlanBlock {
     return PlanBlock(
       type: blockType,
       subject: json['subject'] as String?,
+      task: json['task'] as String?,
       durationMin: json['duration_min'] as int,
       editable: json['editable'] as bool? ?? false,
     );
@@ -160,5 +163,39 @@ class StudyPlan {
       case PlanMode.light:
         return light;
     }
+  }
+}
+
+class DailySession {
+  final String date;
+  final PlanMode mode;
+  final List<PlanBlock> blocks;
+  final bool locked;
+
+  DailySession({
+    required this.date,
+    required this.mode,
+    required this.blocks,
+    required this.locked,
+  });
+
+  factory DailySession.fromJson(Map<String, dynamic> json) {
+    final modeStr = json['mode'] as String? ?? 'medium';
+    PlanMode planMode = PlanMode.medium;
+    if (modeStr == 'heavy') planMode = PlanMode.heavy;
+    if (modeStr == 'light') planMode = PlanMode.light;
+
+    final blockList = json['blocks'] == null
+        ? <PlanBlock>[]
+        : (json['blocks'] as List<dynamic>)
+            .map((b) => PlanBlock.fromJson(b as Map<String, dynamic>))
+            .toList();
+
+    return DailySession(
+      date: json['date'] as String? ?? '',
+      mode: planMode,
+      blocks: blockList,
+      locked: json['locked'] as bool? ?? false,
+    );
   }
 }

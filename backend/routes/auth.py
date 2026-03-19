@@ -3,6 +3,7 @@ Auth routes — Register, Login, Refresh Token, Get Profile.
 """
 
 from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from datetime import datetime, timezone
 from bson import ObjectId
 
@@ -14,6 +15,7 @@ from models.user import (
 from utils.security import (
     hash_password, verify_password,
     create_access_token, create_refresh_token, decode_token,
+    blacklist_token,
 )
 from utils.dependencies import get_current_user
 
@@ -156,6 +158,16 @@ async def refresh_token(data: RefreshRequest):
             created_at=user.get("created_at"),
         ),
     )
+
+
+@router.post("/logout", response_model=MessageResponse)
+async def logout(current_user: dict = Depends(get_current_user),
+                 credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
+    """
+    Logout — blacklist the current access token so it can no longer be used.
+    """
+    blacklist_token(credentials.credentials)
+    return MessageResponse(message="Logged out successfully")
 
 
 @router.get("/profile", response_model=UserResponse)

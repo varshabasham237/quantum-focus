@@ -118,8 +118,15 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Logout
+  /// Logout — revoke token on server, then clear local state
   Future<void> logout() async {
+    // Tell the backend to blacklist the current token
+    try {
+      await _api.post('/auth/logout', {});
+    } catch (_) {
+      // Even if the server call fails, we still clear locally
+    }
+
     _api.clearTokens();
     await _clearStored();
     _isLoggedIn = false;
