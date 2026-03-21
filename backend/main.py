@@ -16,6 +16,7 @@ from routes.reports import router as reports_router
 from routes.strictness import router as strictness_router
 from routes.app_blocking import router as app_blocking_router
 from routes.analytics import router as analytics_router
+from routes.quantum import router as quantum_router
 
 
 @asynccontextmanager
@@ -51,6 +52,7 @@ app.include_router(reports_router, prefix="/api")
 app.include_router(strictness_router, prefix="/api")
 app.include_router(app_blocking_router, prefix="/api")
 app.include_router(analytics_router, prefix="/api")
+app.include_router(quantum_router, prefix="/api")
 
 
 @app.get("/")
