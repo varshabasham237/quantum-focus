@@ -82,3 +82,43 @@ async def evaluate_user_strictness(user_id: str, date_str: str) -> dict:
     )
     
     return strictness
+
+async def apply_emergency_exit_penalty(user_id: str) -> dict:
+    """
+    Applies an immediate penalty (1 warning) for using the Emergency Exit.
+    """
+    db = get_db()
+    user = await db.users.find_one({"_id": ObjectId(user_id)})
+    if not user:
+        return {"error": "User not found"}
+        
+    strictness = user.get("strictness_settings", {
+        "warnings": 0,
+        "level": "NORMAL",
+        "active_penalties": [],
+        "last_evaluated": None
+    })
+    
+    # Increment warnings by 1, cap at 3
+    strictness["warnings"] = min(3, strictness["warnings"] + 1)
+    
+    # Recalculate level
+    if strictness["warnings"] == 0:
+        strictness["level"] = "NORMAL"
+        strictness["active_penalties"] = []
+    elif strictness["warnings"] == 1:
+        strictness["level"] = "WARNING_1"
+        strictness["active_penalties"] = ["None (Warning Only)"]
+    elif strictness["warnings"] == 2:
+        strictness["level"] = "WARNING_2"
+        strictness["active_penalties"] = ["Free Mode Halved"]
+    elif strictness["warnings"] >= 3:
+        strictness["level"] = "LOCKDOWN"
+        strictness["active_penalties"] = ["Strict App Blocking", "Free Mode Disabled"]
+        
+    await db.users.update_one(
+        {"_id": ObjectId(user_id)},
+        {"$set": {"strictness_settings": strictness}}
+    )
+    
+    return strictness

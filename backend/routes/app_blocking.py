@@ -178,3 +178,44 @@ async def get_session_status(
     if not session:
         return {"session_active": False}
     return session
+
+
+@router.post("/session/emergency-exit")
+async def trigger_emergency_exit(
+    current_user: dict = Depends(get_current_user),
+    db=Depends(get_db)
+):
+    """
+    Trigger the emergency exit for a locked session.
+    Allowed 1 per day. Immediately ends the session and applies a strictness penalty.
+    """
+    user_id = str(current_user["_id"])
+    today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    session = await db["focus_sessions"].find_one({"user_id": user_id})
+    if not session:
+        raise HTTPException(status_code=400, detail="No active session found.")
+
+    last_exit = session.get("last_emergency_exit_date")
+    if last_exit == today_str:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail="Emergency exit already used today. Allowed once per day."
+        )
+
+    # 1. Apply Penalty
+    from services.strictness_service import apply_emergency_exit_penalty
+    await apply_emergency_exit_penalty(user_id)
+
+    # 2. End session and log the exit
+    await db["focus_sessions"].update_one(
+        {"user_id": user_id},
+        {"$set": {
+            "session_active": False,
+            "focus_locked": False,
+            "ended_at": datetime.now(timezone.utc).isoformat(),
+            "last_emergency_exit_date": today_str
+        }}
+    )
+
+    return {"message": "Emergency exit triggered. Focus mode disabled and warning applied."}

@@ -189,6 +189,36 @@ class AppBlockingService extends ChangeNotifier {
     );
   }
 
+  Future<({bool success, String? reason})> triggerEmergencyExit() async {
+    try {
+      final res = await _api.post('/app-blocking/session/emergency-exit', {});
+      if (res != null && res.containsKey('error') && res['statusCode'] == 429) {
+        return (success: false, reason: 'Emergency exit already used today. Allowed once per day.');
+      }
+      
+      // Force end the session locally
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(_keySessionActive, false);
+      await prefs.setInt(_keySessionEndMs, 0);
+      await prefs.setInt(_keySwitchCount, 0);
+      await prefs.setBool(_keyFocusLocked, false);
+
+      if (isAndroid) {
+        try { await _channel.invokeMethod('stopMonitorService'); } catch (_) {}
+      }
+
+      _sessionActive = false;
+      _sessionEndMs  = 0;
+      _switchCount   = 0;
+      _focusLocked   = false;
+      notifyListeners();
+
+      return (success: true, reason: 'Emergency exit triggered! You have received a Strictness warning.');
+    } catch (_) {
+      return (success: false, reason: 'Network error triggering emergency exit.');
+    }
+  }
+
   Future<void> stopSession() async {
     try {
       await _api.post('/app-blocking/session/stop', {});

@@ -407,33 +407,102 @@ class _FocusModeControlWidgetState extends State<FocusModeControlWidget>
         ? 'Unlocks at ${_formatTime(endTime)}'
         : 'Unlocks when session ends';
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFF4757).withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: const Color(0xFFFF4757).withValues(alpha: 0.25),
-        ),
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.warning_amber_rounded,
-              size: 14, color: Color(0xFFFF9F43)),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              'You\'ve used all 3 switches. Focus mode is enforced. $timeStr.',
-              style: const TextStyle(
-                color: Color(0xFFFF9F43),
-                fontSize: 11,
-                height: 1.4,
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFF4757).withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: const Color(0xFFFF4757).withValues(alpha: 0.25),
             ),
+          ),
+          child: Row(
+            children: [
+              const Icon(Icons.warning_amber_rounded,
+                  size: 14, color: Color(0xFFFF9F43)),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'You\'ve used all 3 switches. Focus mode is enforced. $timeStr.',
+                  style: const TextStyle(
+                    color: Color(0xFFFF9F43),
+                    fontSize: 11,
+                    height: 1.4,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton.icon(
+            onPressed: () => _handleEmergencyExit(svc),
+            icon: const Icon(Icons.emergency_share_rounded, size: 14),
+            label: const Text('Use Emergency Exit', style: TextStyle(fontSize: 12)),
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(0xFFFF4757),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _handleEmergencyExit(AppBlockingService svc) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF1A1A2E),
+        title: const Row(
+          children: [
+            Icon(Icons.warning_rounded, color: Color(0xFFFF4757)),
+            SizedBox(width: 8),
+            Text('Emergency Exit', style: TextStyle(color: Colors.white, fontSize: 18)),
+          ],
+        ),
+        content: const Text(
+          'Are you sure? This will consume your 1 daily emergency exit, instantly end your session, and ADD A WARNING to your Strictness Profile.',
+          style: TextStyle(color: Colors.white70, height: 1.5),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancel', style: TextStyle(color: Colors.white54)),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFFF4757)),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Confirm Exit', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           ),
         ],
       ),
     );
+
+    if (confirmed == true && mounted) {
+      final res = await svc.triggerEmergencyExit();
+      if (!mounted) return;
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(res.reason ?? (res.success ? 'Emergency exit applied.' : 'Failed to exit.')),
+          backgroundColor: res.success ? const Color(0xFFFF9F43) : const Color(0xFFFF4757),
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 4),
+        ),
+      );
+
+      if (res.success && widget.onSessionEnd != null) {
+        widget.onSessionEnd!();
+      }
+    }
   }
 
   String _formatTime(DateTime dt) {
