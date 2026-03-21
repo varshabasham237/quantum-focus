@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../models/report_model.dart';
 import '../services/report_service.dart';
+import '../services/api_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_drawer.dart';
+import '../widgets/notification_bell.dart';
+import 'package:provider/provider.dart';
 
 class AnalysisScreen extends StatefulWidget {
   const AnalysisScreen({super.key});
@@ -52,6 +55,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> with SingleTickerProvid
         title: const Text('Analysis & Reports'),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: const [NotificationBell()],
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: AppTheme.accentViolet,
@@ -259,9 +263,57 @@ class _AnalysisScreenState extends State<AnalysisScreen> with SingleTickerProvid
               )).toList(),
           if (_summary!.topDistractedApps.isEmpty)
             const Text('No distraction data logged yet.', style: TextStyle(color: AppTheme.textMuted)),
+
+          const SizedBox(height: 32),
+          SizedBox(
+            width: double.infinity,
+            height: 54,
+            child: ElevatedButton.icon(
+              icon: const Icon(Icons.psychology, color: Colors.white),
+              label: const Text("Trigger Quantum Evaluation ⚛️", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.accentViolet,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              ),
+              onPressed: () => _triggerQuantumEvaluation(context),
+            )
+          ),
+          const SizedBox(height: 32),
         ],
       ),
     );
+  }
+
+  Future<void> _triggerQuantumEvaluation(BuildContext context) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => const Center(child: CircularProgressIndicator(color: AppTheme.accentViolet)),
+    );
+    final api = context.read<ApiService>();
+    final res = await api.post('/quantum/evaluate-state', {});
+    if (!mounted) return;
+    Navigator.pop(context); // close loader
+    
+    if (res != null && !res.containsKey('error')) {
+       final collapsed = res['collapsed_state'];
+       final msg = res['message'];
+       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+         content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+               Text("State Collapsed: $collapsed", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+               const SizedBox(height: 4),
+               Text(msg, style: const TextStyle(fontSize: 14)),
+            ]
+         ),
+         backgroundColor: collapsed.toString().contains('Highly') ? AppTheme.accentRose : AppTheme.accentEmerald,
+         duration: const Duration(seconds: 4),
+       ));
+    } else {
+       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Quantum Engine failed to evaluate.'), backgroundColor: AppTheme.accentRose));
+    }
   }
 
   Widget _buildSummaryCard({required String title, required String value, required IconData icon, required Color color}) {

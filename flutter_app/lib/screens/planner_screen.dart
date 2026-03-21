@@ -201,7 +201,13 @@ class _PlannerScreenState extends State<PlannerScreen>
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
-            child: _buildSaveButton(mode),
+            child: Column(
+              children: [
+                _buildSaveButton(mode),
+                const SizedBox(height: 16),
+                _buildOptimizeButton(),
+              ],
+            ),
           ),
         ),
       ],
@@ -420,6 +426,25 @@ class _PlannerScreenState extends State<PlannerScreen>
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOptimizeButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 52,
+      child: OutlinedButton.icon(
+        onPressed: _loading ? null : _loadPlan,
+        icon: const Icon(Icons.auto_awesome, color: AppTheme.accentViolet),
+        label: const Text(
+          'Re-Optimize AI Schedule',
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppTheme.accentViolet),
+        ),
+        style: OutlinedButton.styleFrom(
+          side: const BorderSide(color: AppTheme.accentViolet, width: 2),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         ),
       ),
     );
