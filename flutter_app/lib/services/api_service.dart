@@ -75,6 +75,26 @@ class ApiService {
     }
   }
 
+  /// GET request (returns a list response)
+  Future<List<dynamic>?> getList(String path) async {
+    try {
+      final response = await http
+          .get(
+            Uri.parse('${ApiConfig.baseUrl}$path'),
+            headers: _headers,
+          )
+          .timeout(ApiConfig.receiveTimeout);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        final body = jsonDecode(response.body);
+        if (body is List) return body;
+        if (body is Map && body.containsKey('data')) return body['data'] as List?;
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   /// PATCH request
   Future<Map<String, dynamic>?> patch(String path, Map<String, dynamic> body) async {
     try {

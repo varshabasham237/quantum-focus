@@ -33,6 +33,26 @@ class DailySessionTaskUpdate(BaseModel):
     task: str
 
 
+class BlockCompleteRequest(BaseModel):
+    """Mark a study block as completed or mark it pending (incomplete)."""
+    block_index: int
+    completed: bool              # True = done, False = not finished
+    priority_boost: bool = False # bump priority when pending
+
+
+class PendingTask(BaseModel):
+    """A study task deferred to a future session."""
+    subject: str
+    task: Optional[str] = None
+    duration_min: int
+    priority: int = 1            # higher = schedule first tomorrow
+
+
+class RescheduleResponse(BaseModel):
+    message: str
+    blocks_added: int
+
+
 class DayPlan(BaseModel):
     """A full day plan for one mode."""
     mode: PlanMode

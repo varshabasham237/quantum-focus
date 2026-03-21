@@ -11,6 +11,7 @@ from models.planner import (
     StudyPlanResponse, PlanUpdateRequest, PlanMode,
     DailySessionRequest, DailySessionResponse,
     DailySessionTaskUpdate,
+    BlockCompleteRequest, RescheduleResponse,
 )
 from services.planner_service import generate_plans
 from utils.dependencies import get_current_user
@@ -199,4 +200,89 @@ async def update_daily_session_task(
 
     return {"message": "Task updated successfully", "task": data.task}
 
+# ── Task Completion Feedback (Module 4.3) ─────────────────────────
+
+@router.patch("/daily-session/complete")
+async def complete_daily_session_block(
+    data: BlockCompleteRequest,
+    current_user: dict = Depends(get_current_user),
+):
+    """
+    Mark a study block as completed or pending.
+    If pending, push it to the user's pending_tasks list for rescheduling.
+    """
+    today = date.today().isoformat()
+    db = get_db()
+
+    existing = current_user.get("daily_session")
+    if not existing or existing.get("date") != today:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No daily session locked for today.",
+        )
+
+    blocks = existing.get("blocks", [])
+    idx = data.block_index
+    if idx < 0 or idx >= len(blocks):
+        raise HTTPException(status_code=400, detail="Invalid block index.")
+
+    block = blocks[idx]
+    if block.get("type") != "study":
+        raise HTTPException(status_code=403, detail="Can only complete/pend study blocks.")
+
+    # Mark block with completion flag in daily_session
+    await db.users.update_one(
+        {"_id": ObjectId(current_user["id"])},
+        {"$set": {f"daily_session.blocks.{idx}.completed": data.completed}},
+    )
+
+    # If not completed, push to pending_tasks for rescheduling
+    if not data.completed:
+        priority = 2 if data.priority_boost else 1
+        pending_entry = {
+            "subject": block.get("subject", "Unknown"),
+            "task": block.get("task"),
+            "duration_min": block.get("duration_min", 25),
+            "priority": priority,
+        }
+        await db.users.update_one(
+            {"_id": ObjectId(current_user["id"])},
+            {"$push": {"pending_tasks": pending_entry}},
+        )
+        return {"message": "Block marked as pending", "queued": True, "priority": priority}
+
+    return {"message": "Block marked as completed", "queued": False}
+
+
+@router.post("/reschedule", response_model=RescheduleResponse)
+async def reschedule_pending_tasks(
+    current_user: dict = Depends(get_current_user),
+):
+    """
+    Inject all pending tasks into tomorrow's session overrides.
+    Clears pending_tasks after storing. The next day's session will
+    prepend these blocks (highest priority first) before the generated plan.
+    """
+    db = get_db()
+    pending = current_user.get("pending_tasks", [])
+
+    if not pending:
+        return RescheduleResponse(message="No pending tasks to reschedule.", blocks_added=0)
+
+    # Sort by priority descending (highest priority injected first)
+    sorted_pending = sorted(pending, key=lambda x: x.get("priority", 1), reverse=True)
+
+    # Store as next-day overrides (prepended when the next daily session is generated)
+    await db.users.update_one(
+        {"_id": ObjectId(current_user["id"])},
+        {
+            "$set": {"next_session_overrides": sorted_pending},
+            "$unset": {"pending_tasks": ""},
+        },
+    )
+
+    return RescheduleResponse(
+        message=f"{len(sorted_pending)} task(s) scheduled for tomorrow.",
+        blocks_added=len(sorted_pending),
+    )
 

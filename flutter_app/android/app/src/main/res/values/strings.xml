@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuantumFocus</string>
+    <string name="accessibility_service_label">QuantumFocus Focus Mode</string>
+    <string name="accessibility_service_description">QuantumFocus uses accessibility to detect when a blocked app is opened during a study session and replaces it with a focus reminder screen. We never read screen content or personal data.</string>
+</resources>

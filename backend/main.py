@@ -14,6 +14,7 @@ from routes.planner import router as planner_router
 from routes.calendar import router as calendar_router
 from routes.reports import router as reports_router
 from routes.strictness import router as strictness_router
+from routes.app_blocking import router as app_blocking_router
 
 
 @asynccontextmanager
@@ -47,6 +48,7 @@ app.include_router(planner_router, prefix="/api")
 app.include_router(calendar_router, prefix="/api")
 app.include_router(reports_router, prefix="/api")
 app.include_router(strictness_router, prefix="/api")
+app.include_router(app_blocking_router, prefix="/api")
 
 
 @app.get("/")
