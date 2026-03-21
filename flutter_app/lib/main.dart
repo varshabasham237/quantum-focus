@@ -17,17 +17,85 @@ import 'screens/analysis_screen.dart';
 import 'screens/strictness_screen.dart';
 import 'screens/permission_setup_screen.dart';
 import 'screens/blocked_apps_screen.dart';
+import 'screens/lock_screen.dart';
+import 'services/security_service.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SecurityService().initRuntimeProtection();
   runApp(const AntiDistractionApp());
 }
 
-class AntiDistractionApp extends StatelessWidget {
+class AntiDistractionApp extends StatefulWidget {
   const AntiDistractionApp({super.key});
+
+  @override
+  State<AntiDistractionApp> createState() => _AntiDistractionAppState();
+}
+
+class _AntiDistractionAppState extends State<AntiDistractionApp> with WidgetsBindingObserver {
+  DateTime? _pausedTime;
+  bool _isLocked = true; // Always lock on cold start
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      _pausedTime = DateTime.now();
+    } else if (state == AppLifecycleState.resumed) {
+      if (_pausedTime != null) {
+        final diff = DateTime.now().difference(_pausedTime!);
+        if (diff.inMinutes >= 5 && !_isLocked) {
+          setState(() {
+            _isLocked = true;
+          });
+        }
+      }
+    }
+  }
+
+  void _onUnlocked() {
+    setState(() {
+      _isLocked = false;
+      _pausedTime = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final apiService = ApiService();
+
+    final materialApp = MaterialApp(
+      title: 'QuantumFocus',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.darkTheme,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const AuthGate(),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/onboarding': (context) => const OnboardingScreen(),
+        '/permission-setup': (context) => const PermissionSetupScreen(),
+        '/dashboard': (context) => const FocusScreen(),
+        '/profile': (context) => const ProfileScreen(),
+        '/planner': (context) => const PlannerScreen(),
+        '/calendar': (context) => const CalendarScreen(),
+        '/analysis': (context) => const AnalysisScreen(),
+        '/strictness': (context) => const StrictnessScreen(),
+        '/blocked-apps': (context) => const BlockedAppsScreen(),
+      },
+    );
 
     return MultiProvider(
       providers: [
@@ -43,26 +111,11 @@ class AntiDistractionApp extends StatelessWidget {
           update: (ctx, api, prev) => prev ?? AppBlockingService(api),
         ),
       ],
-      child: MaterialApp(
-        title: 'QuantumFocus',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.darkTheme,
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const AuthGate(),
-          '/login': (context) => const LoginScreen(),
-          '/register': (context) => const RegisterScreen(),
-          '/onboarding': (context) => const OnboardingScreen(),
-          '/permission-setup': (context) => const PermissionSetupScreen(),
-          '/dashboard': (context) => const FocusScreen(),
-          '/profile': (context) => const ProfileScreen(),
-          '/planner': (context) => const PlannerScreen(),
-          '/calendar': (context) => const CalendarScreen(),
-          '/analysis': (context) => const AnalysisScreen(),
-          '/strictness': (context) => const StrictnessScreen(),
-          '/blocked-apps': (context) => const BlockedAppsScreen(),
-        },
-      ),
+      // If locked, overlay the lock screen over the whole app completely natively
+      child: _isLocked ? LockScreen(child: Builder(builder: (_) {
+         Future.microtask(_onUnlocked);
+         return materialApp;
+      })) : materialApp,
     );
   }
 }
