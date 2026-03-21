@@ -6,31 +6,44 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/app_blocking_model.dart';
 import 'api_service.dart';
 
-/// Manages the app blocking session and blocklist.
-/// Bridges between the Kotlin native layer and the Flutter UI.
+/// Manages the app blocking session, blocklist, and Mode Switching Control (5.3).
+///
+/// Mode Switching Rules:
+///  - Max [maxSwitches] = 3 mode-off/on toggles per session
+///  - After 3 switches → [focusLocked] = true → cannot turn off focus mode
+///  - Unlocks automatically when the session ends
 class AppBlockingService extends ChangeNotifier {
   static const _channel = MethodChannel('com.quantumfocus/permissions');
 
   // ── SharedPreferences keys (must match FocusAccessibilityService.kt) ───
-  static const _keyBlocklist = 'blocked_packages';
-  static const _keySessionActive = 'session_active';
-  static const _keySessionEndMs = 'session_end_ms';
+  static const _keyBlocklist      = 'blocked_packages';
+  static const _keySessionActive  = 'session_active';
+  static const _keySessionEndMs   = 'session_end_ms';
+  static const _keySwitchCount    = 'switch_count';
+  static const _keyFocusLocked    = 'focus_locked';
+
+  static const int maxSwitches = 3;
 
   final ApiService _api;
-
   AppBlockingService(this._api);
 
   // ── State ──────────────────────────────────────────────────────────────
-  List<BlockedApp> _blocklist = [];
-  List<InstalledApp> _installedApps = [];
+  List<BlockedApp>   _blocklist      = [];
+  List<InstalledApp> _installedApps  = [];
   bool _sessionActive = false;
-  int _sessionEndMs = 0;
-  bool _isLoading = false;
+  int  _sessionEndMs  = 0;
+  bool _isLoading     = false;
+  int  _switchCount   = 0;       // # of off→on / on→off toggles this session
+  bool _focusLocked   = false;   // locked after maxSwitches reached
 
-  List<BlockedApp> get blocklist => _blocklist;
-  List<InstalledApp> get installedApps => _installedApps;
-  bool get sessionActive => _sessionActive;
-  bool get isLoading => _isLoading;
+  List<BlockedApp>   get blocklist      => _blocklist;
+  List<InstalledApp> get installedApps  => _installedApps;
+  bool get sessionActive  => _sessionActive;
+  bool get isLoading      => _isLoading;
+  int  get switchCount    => _switchCount;
+  bool get focusLocked    => _focusLocked;
+  int  get switchesLeft   => (maxSwitches - _switchCount).clamp(0, maxSwitches);
+  bool get canToggle      => !_focusLocked;
 
   bool get isAndroid => !kIsWeb && Platform.isAndroid;
 
@@ -59,7 +72,6 @@ class AppBlockingService extends ChangeNotifier {
         await _writeBlocklistToPrefs();
       }
     } catch (_) {
-      // Use cached prefs blocklist if network fails
       await _readBlocklistFromPrefs();
     }
     _isLoading = false;
@@ -72,8 +84,7 @@ class AppBlockingService extends ChangeNotifier {
         'package_name': app.packageName,
         'app_name': app.appName,
       });
-      _blocklist.add(BlockedApp(
-          packageName: app.packageName, appName: app.appName));
+      _blocklist.add(BlockedApp(packageName: app.packageName, appName: app.appName));
       await _writeBlocklistToPrefs();
       notifyListeners();
     } catch (_) {}
@@ -91,7 +102,7 @@ class AppBlockingService extends ChangeNotifier {
   bool isBlocked(String packageName) =>
       _blocklist.any((a) => a.packageName == packageName);
 
-  // ── Session ─────────────────────────────────────────────────────────────
+  // ── Session ──────────────────────────────────────────────────────────────
 
   Future<void> startSession({required int durationMinutes}) async {
     final endMs = DateTime.now()
@@ -102,21 +113,80 @@ class AppBlockingService extends ChangeNotifier {
           {'duration_minutes': durationMinutes});
     } catch (_) {}
 
-    // Write to SharedPreferences so Kotlin can read it instantly
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_keySessionActive, true);
     await prefs.setInt(_keySessionEndMs, endMs);
+    // Reset switch counter on fresh session start
+    await prefs.setInt(_keySwitchCount, 0);
+    await prefs.setBool(_keyFocusLocked, false);
 
-    // Start the foreground monitoring service
     if (isAndroid) {
-      try {
-        await _channel.invokeMethod('startMonitorService');
-      } catch (_) {}
+      try { await _channel.invokeMethod('startMonitorService'); } catch (_) {}
     }
 
     _sessionActive = true;
-    _sessionEndMs = endMs;
+    _sessionEndMs  = endMs;
+    _switchCount   = 0;
+    _focusLocked   = false;
     notifyListeners();
+  }
+
+  /// Toggle focus mode on/off (respecting switch-count rules).
+  ///
+  /// Returns `false` (with reason) if locked and cannot toggle.
+  Future<({bool success, String? reason})> toggleFocusMode() async {
+    if (_focusLocked) {
+      return (success: false, reason: 'Focus mode is locked after $_switchCount switches. Unlocks when session ends.');
+    }
+
+    if (!_sessionActive) {
+      return (success: false, reason: 'No active focus session.');
+    }
+
+    // Count this switch
+    _switchCount++;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_keySwitchCount, _switchCount);
+
+    // Check if we just hit the limit
+    if (_switchCount >= maxSwitches) {
+      _focusLocked = true;
+      // Re-enable session-active (can't turn off once locked)
+      await prefs.setBool(_keyFocusLocked, true);
+      await prefs.setBool(_keySessionActive, true);
+
+      if (isAndroid) {
+        try { await _channel.invokeMethod('startMonitorService'); } catch (_) {}
+      }
+
+      notifyListeners();
+      return (
+        success: true,
+        reason: '⚠️ Focus mode locked! You\'ve used all $maxSwitches switches. Stay focused until the session ends.'
+      );
+    }
+
+    // Normal toggle — pause/resume blocking
+    _sessionActive = !_sessionActive;
+    await prefs.setBool(_keySessionActive, _sessionActive);
+
+    if (_sessionActive) {
+      if (isAndroid) {
+        try { await _channel.invokeMethod('startMonitorService'); } catch (_) {}
+      }
+    } else {
+      if (isAndroid) {
+        try { await _channel.invokeMethod('stopMonitorService'); } catch (_) {}
+      }
+    }
+
+    notifyListeners();
+    return (
+      success: true,
+      reason: _sessionActive
+          ? 'Focus mode resumed. $switchesLeft switch${switchesLeft == 1 ? "" : "es"} remaining.'
+          : 'Focus mode paused. $switchesLeft switch${switchesLeft == 1 ? "" : "es"} remaining.'
+    );
   }
 
   Future<void> stopSession() async {
@@ -127,28 +197,37 @@ class AppBlockingService extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_keySessionActive, false);
     await prefs.setInt(_keySessionEndMs, 0);
+    await prefs.setInt(_keySwitchCount, 0);
+    await prefs.setBool(_keyFocusLocked, false);
 
     if (isAndroid) {
-      try {
-        await _channel.invokeMethod('stopMonitorService');
-      } catch (_) {}
+      try { await _channel.invokeMethod('stopMonitorService'); } catch (_) {}
     }
 
     _sessionActive = false;
-    _sessionEndMs = 0;
+    _sessionEndMs  = 0;
+    _switchCount   = 0;
+    _focusLocked   = false;
     notifyListeners();
   }
 
   Future<void> _syncSessionStateFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     _sessionActive = prefs.getBool(_keySessionActive) ?? false;
-    _sessionEndMs = prefs.getInt(_keySessionEndMs) ?? 0;
+    _sessionEndMs  = prefs.getInt(_keySessionEndMs)   ?? 0;
+    _switchCount   = prefs.getInt(_keySwitchCount)    ?? 0;
+    _focusLocked   = prefs.getBool(_keyFocusLocked)   ?? false;
+
     // Auto-clear expired session
     if (_sessionEndMs > 0 &&
         DateTime.now().millisecondsSinceEpoch > _sessionEndMs) {
       _sessionActive = false;
-      _sessionEndMs = 0;
+      _sessionEndMs  = 0;
+      _switchCount   = 0;
+      _focusLocked   = false;
       await prefs.setBool(_keySessionActive, false);
+      await prefs.setInt(_keySwitchCount, 0);
+      await prefs.setBool(_keyFocusLocked, false);
     }
     notifyListeners();
   }
@@ -180,7 +259,6 @@ class AppBlockingService extends ChangeNotifier {
   Future<void> _writeBlocklistToPrefs() async {
     final packages = _blocklist.map((a) => a.packageName).toList();
     final prefs = await SharedPreferences.getInstance();
-    // Store as JSON array — Kotlin reads this directly
     await prefs.setString(_keyBlocklist, jsonEncode(packages));
   }
 

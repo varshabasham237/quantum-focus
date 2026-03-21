@@ -8,6 +8,9 @@ import '../services/api_service.dart';
 import '../services/strictness_service.dart';
 import '../services/planner_service.dart';
 import '../models/planner_model.dart';
+import 'package:provider/provider.dart';
+import '../services/app_blocking_service.dart';
+import '../widgets/focus_mode_control_widget.dart';
 
 /// Main Focus Screen — timer + controls + mode picker + daily session timeline
 class FocusScreen extends StatefulWidget {
@@ -130,6 +133,17 @@ class _FocusScreenState extends State<FocusScreen>
       final lockedSession = await plannerService.lockDailySession(_selectedMode);
       if (lockedSession != null) {
         _setupLockedSession(lockedSession);
+        
+        // Auto-start the blocking session when locked
+        if (mounted) {
+          final blockSvc = context.read<AppBlockingService>();
+          if (!blockSvc.sessionActive) {
+             int totalMins = lockedSession.blocks.fold(0, (sum, b) => sum + b.durationMin);
+             // Cap at 24 hours just in case
+             if (totalMins > 1440) totalMins = 1440;
+             await blockSvc.startSession(durationMinutes: totalMins);
+          }
+        }
       } else {
         setState(() => _isLoading = false);
         if (mounted) {
@@ -249,6 +263,11 @@ class _FocusScreenState extends State<FocusScreen>
           _remainingTime = 0;
           _isRunning = false;
         });
+        
+        // Stop blocking session when day is done
+        if (mounted) {
+          context.read<AppBlockingService>().stopSession();
+        }
       }
     } else {
       // Fallback behavior if no session
@@ -265,6 +284,9 @@ class _FocusScreenState extends State<FocusScreen>
           _remainingTime = 25 * 60;
           _isRunning = false;
         });
+        if (mounted) {
+          context.read<AppBlockingService>().stopSession();
+        }
       }
     }
   }
@@ -392,7 +414,10 @@ class _FocusScreenState extends State<FocusScreen>
               const SizedBox(height: 40),
 
               _buildControls(),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
+
+              const FocusModeControlWidget(),
+              const SizedBox(height: 30),
 
               if (_dailySession == null) _buildModePicker(),
               if (_dailySession != null) _buildSessionTimeline(),

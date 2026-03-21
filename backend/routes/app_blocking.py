@@ -99,13 +99,50 @@ async def start_blocking_session(
         {"$set": {
             "session_active": True,
             "started_at": datetime.now(timezone.utc).isoformat(),
-            "ends_at": end_time
+            "ends_at": end_time,
+            "switch_count": 0,
+            "focus_locked": False
         }},
         upsert=True
     )
     return {
         "message": "Focus blocking session started.",
         "ends_at": end_time
+    }
+
+
+@router.post("/session/toggle")
+async def toggle_blocking_session(
+    current_user: dict = Depends(get_current_user),
+    db=Depends(get_db)
+):
+    """Register a mode switch (pause/resume). Used for 5.3 Mode Switching limits."""
+    user_id = str(current_user["_id"])
+    session = await db["focus_sessions"].find_one({"user_id": user_id})
+    if not session:
+        return {"message": "No active session to toggle."}
+
+    new_count = session.get("switch_count", 0) + 1
+    locked = new_count >= 3
+    is_active = not session.get("session_active", False)
+
+    # If locked, force active
+    if locked:
+        is_active = True
+
+    await db["focus_sessions"].update_one(
+        {"user_id": user_id},
+        {"$set": {
+            "session_active": is_active,
+            "switch_count": new_count,
+            "focus_locked": locked
+        }}
+    )
+
+    return {
+        "switch_count": new_count,
+        "focus_locked": locked,
+        "session_active": is_active
     }
 
 

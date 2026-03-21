@@ -1,9 +1,7 @@
 package com.antidistraction.anti_distraction_app
 
 import android.accessibilityservice.AccessibilityService
-import android.content.ComponentName
 import android.content.Intent
-import android.content.SharedPreferences
 import android.view.accessibility.AccessibilityEvent
 import org.json.JSONArray
 
@@ -13,30 +11,32 @@ import org.json.JSONArray
  * Listens for window change events. When the foreground app changes and the new
  * package is in the user's block list (stored in SharedPreferences), it immediately
  * launches BlockOverlayActivity to cover the distracting app.
+ *
+ * Module 5.3: Also respects the focus_locked flag — when locked, blocking cannot
+ * be bypassed even if session_active is temporarily false.
  */
 class FocusAccessibilityService : AccessibilityService() {
 
     companion object {
-        const val PREFS_NAME       = "focus_prefs"
-        const val KEY_BLOCKLIST    = "blocked_packages"
-        const val KEY_SESSION_ACTIVE = "session_active"
-        const val KEY_SESSION_END  = "session_end_ms"
+        const val PREFS_NAME          = "focus_prefs"
+        const val KEY_BLOCKLIST       = "blocked_packages"
+        const val KEY_SESSION_ACTIVE  = "session_active"
+        const val KEY_SESSION_END     = "session_end_ms"
+        const val KEY_SWITCH_COUNT    = "switch_count"    // 5.3
+        const val KEY_FOCUS_LOCKED    = "focus_locked"    // 5.3
 
-        // Package name for this app — excluded from its own block list
         private const val OWN_PACKAGE = "com.antidistraction.anti_distraction_app"
+        private const val MAX_SWITCHES = 3
     }
 
-    private lateinit var prefs: SharedPreferences
     private var lastBlockedPackage: String = ""
 
     override fun onServiceConnected() {
         super.onServiceConnected()
-        prefs = applicationContext.getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         event ?: return
-
         if (event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
 
         val packageName = event.packageName?.toString() ?: return
@@ -48,49 +48,59 @@ class FocusAccessibilityService : AccessibilityService() {
             packageName.startsWith("com.google.android.inputmethod")
         ) return
 
-        // Only act when a focus session is active
-        if (!isSessionActive()) return
+        // Only block when a focus session is active OR focus is locked (5.3)
+        if (!shouldBlock()) return
 
-        // Check if this package is blocked
         if (isBlocked(packageName)) {
-            // Prevent re-triggering if already showing overlay for same package
             if (packageName == lastBlockedPackage) return
             lastBlockedPackage = packageName
             showBlockOverlay(packageName)
         } else {
-            // Reset last blocked when user navigates to allowed app
             if (packageName != lastBlockedPackage) lastBlockedPackage = ""
         }
     }
 
-    override fun onInterrupt() {
-        // Required — called when service is interrupted (e.g., user disables it)
-    }
+    override fun onInterrupt() {}
 
-    // ── Session check ──────────────────────────────────────────────────────
-    private fun isSessionActive(): Boolean {
-        if (!prefs.getBoolean(KEY_SESSION_ACTIVE, false)) return false
-        val endMs = prefs.getLong(KEY_SESSION_END, 0L)
+    // ── Session / Lock check (5.3) ─────────────────────────────────────────
+    /**
+     * Returns true if blocking should be enforced.
+     * Blocking is enforced if:
+     *  1. session_active == true, OR
+     *  2. focus_locked == true (user hit max switches — cannot turn off focus)
+     * In both cases we also check that the session hasn't expired.
+     */
+    private fun shouldBlock(): Boolean {
+        val prefs = applicationContext.getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        val sessionActive = prefs.getBoolean(KEY_SESSION_ACTIVE, false)
+        val focusLocked   = prefs.getBoolean(KEY_FOCUS_LOCKED, false)
+        val endMs         = prefs.getLong(KEY_SESSION_END, 0L)
+
+        // Check expiry
         if (endMs > 0 && System.currentTimeMillis() > endMs) {
-            // Session expired — auto-deactivate
-            prefs.edit().putBoolean(KEY_SESSION_ACTIVE, false).apply()
+            // Session expired — clear everything
+            prefs.edit()
+                .putBoolean(KEY_SESSION_ACTIVE, false)
+                .putBoolean(KEY_FOCUS_LOCKED, false)
+                .putInt(KEY_SWITCH_COUNT, 0)
+                .apply()
             return false
         }
-        return true
+
+        return sessionActive || focusLocked
     }
 
     // ── Blocklist check ────────────────────────────────────────────────────
     private fun isBlocked(packageName: String): Boolean {
         return try {
+            val prefs = applicationContext.getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
             val raw = prefs.getString(KEY_BLOCKLIST, "[]") ?: "[]"
             val arr = JSONArray(raw)
             for (i in 0 until arr.length()) {
                 if (arr.getString(i) == packageName) return true
             }
             false
-        } catch (e: Exception) {
-            false
-        }
+        } catch (e: Exception) { false }
     }
 
     // ── Launch block overlay ───────────────────────────────────────────────
